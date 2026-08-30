@@ -22,6 +22,7 @@ function updateSize() {
 }
 
 window.addEventListener("resize", updateSize);
+updateSize(); // Set the correct intro on load, not just on resize
 
 /////////////////////////////////////////////////////////////////////////
 // EXPERIENCE SECTION

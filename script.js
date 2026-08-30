@@ -10,9 +10,11 @@ const LONG_DEV_INTRO = "Hello! I am Joshmar 👋🏻";
 const SHORT_DEV_INTRO = "Hi! I'm Josh 👋🏻";
 const headerIntro = document.querySelector(
   ".header__introductionbox"
-).firstElementChild;
+)?.firstElementChild;
 
 function updateSize() {
+  if (!headerIntro) return;
+
   if (Number(window.innerWidth) <= 1200) {
     headerIntro.textContent = SHORT_DEV_INTRO;
     // console.log("went here!");
@@ -96,7 +98,7 @@ const ARROW_STEP = new Map([
 
 document
   .querySelector(".experience__titlebox")
-  .addEventListener("keydown", function (e) {
+  ?.addEventListener("keydown", function (e) {
     const step = ARROW_STEP.get(e.key);
     if (!step) return;
 
@@ -354,20 +356,20 @@ const navMenu = document.querySelector(".navMenu");
 const NAV_BREAKPOINT = 760; // Matches the media query in _navbar.scss
 
 function closeMenu() {
-  hamburger.classList.remove("active");
-  navMenu.classList.remove("active");
-  hamburger.setAttribute("aria-expanded", "false");
+  hamburger?.classList.remove("active");
+  navMenu?.classList.remove("active");
+  hamburger?.setAttribute("aria-expanded", "false");
 }
 
-hamburger.addEventListener("click", () => {
-  const isOpen = navMenu.classList.toggle("active");
+hamburger?.addEventListener("click", () => {
+  const isOpen = Boolean(navMenu?.classList.toggle("active"));
   hamburger.classList.toggle("active", isOpen);
   hamburger.setAttribute("aria-expanded", isOpen);
 });
 
 // Close the menu once a destination is picked, and when the viewport grows
 // past the breakpoint where the menu stops applying
-navMenu.querySelectorAll("a").forEach((link) => {
+navMenu?.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", closeMenu);
 });
 
@@ -376,10 +378,40 @@ window.addEventListener("resize", function () {
 });
 
 /////////////////////////////////////////////////////////////////////////
+// LOTTIE ANIMATIONS
+// Both the player script and the animation JSON come from third-party hosts.
+// If either is unreachable the element renders nothing at all, so show a
+// placeholder while it loads and collapse it if it never arrives.
+const LOTTIE_TIMEOUT_MS = 8000;
+
+document.querySelectorAll("dotlottie-player").forEach((player) => {
+  // Collapse the wrapper only when the player is its only child; the header
+  // shares its box with the coding illustration, which must stay visible
+  const box = player.parentElement;
+  const target = box && box.children.length === 1 ? box : player;
+  target.classList.add("lottie--loading");
+
+  let settled = false;
+  const settle = (failed) => {
+    if (settled) return;
+    settled = true;
+    target.classList.remove("lottie--loading");
+    if (failed) target.classList.add("lottie--failed");
+  };
+
+  player.addEventListener("ready", () => settle(false));
+  player.addEventListener("load", () => settle(false));
+  player.addEventListener("error", () => settle(true));
+
+  // The CDN script itself may never arrive, in which case no event ever fires
+  setTimeout(() => settle(true), LOTTIE_TIMEOUT_MS);
+});
+
+/////////////////////////////////////////////////////////////////////////
 // FOOTER SECTION
 const footerDate = document.querySelector(".footer-date");
 const date = new Date();
-footerDate.textContent = `© ${date.getFullYear()}`;
+if (footerDate) footerDate.textContent = `© ${date.getFullYear()}`;
 
 /////////////////////////////////////////////////////////////////////////
 // REDUCED MOTION
@@ -392,5 +424,11 @@ if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
 
   customElements.whenDefined("dotlottie-player").then(() => {
     players.forEach((player) => player.pause?.());
+  });
+
+  // The project demos are autoplaying video; leave them on their poster frame
+  document.querySelectorAll("video[autoplay]").forEach((video) => {
+    video.removeAttribute("autoplay");
+    video.pause();
   });
 }

@@ -10,6 +10,18 @@
   display: none !important;
 }
 
+// Placeholder shown while a third-party Lottie animation loads, and the
+// collapsed state used when the CDN or animation host never responds
+.lottie--loading {
+  background-color: rgba($color-dark-0, 0.08);
+  border-radius: 8px;
+  animation: lottiePulse 1.4s ease-in-out infinite;
+}
+
+.lottie--failed {
+  display: none !important;
+}
+
 .u-margin-bottom-small {
   margin-bottom: 2rem !important;
 }

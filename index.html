@@ -2,19 +2,32 @@
 <html lang="en">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-MB5VSC8EMR"
-    ></script>
+    <!-- Consent defaults must reach the dataLayer before gtag.js loads,
+         otherwise storage can be written before the denial registers -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
+
+      // Denied by default: no analytics or advertising storage is written, so
+      // the page sets no cookies and needs no consent prompt. GA still receives
+      // cookieless pings (page views, referrer, country).
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "denied",
+      });
+
       gtag("js", new Date());
 
       gtag("config", "G-MB5VSC8EMR");
     </script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-MB5VSC8EMR"
+    ></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
@@ -23,10 +36,6 @@
       href="./assets/icons/portfolio_icon.svg"
     />
     <title>Joshmar Morales</title>
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="./sass/main.scss" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,7 +48,13 @@
       src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
       type="module"
     ></script> -->
-    <script src="https://unpkg.com/@dotlottie/player-component@latest"></script>
+    <!-- Pinned + hashed: an unpinned @latest would run whatever is published
+         at request time, with no commit here to review it -->
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.js"
+      integrity="sha384-QJhyLwEAJ1QGDFuDFSIcF7wOW5+hviPcPTIbF6kwqVndk6W5PXdvieLYv6v4SmAe"
+      crossorigin="anonymous"
+    ></script>
 
     <script type="module" src="./script.js" defer></script>
   </head>
@@ -85,6 +100,7 @@
             </p>
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="./assets/documents/Joshmar_Morales_Resume_V1.pdf"
             >
               <button class="btn btn__resume">Resume</button></a
@@ -462,13 +478,17 @@
               <div class="project__card-tech">Tailwind</div>
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://github.com/kahalagan00/nutri-store-app-v2"
                 ><img
                   src="./assets/svg/projects/github.svg"
                   alt="Github Icon"
                   class="project__card-icon"
               /></a>
-              <a target="_blank" href="https://jhuvnutrition.fit"
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://jhuvnutrition.fit"
                 ><img
                   src="./assets/svg/projects/pagelink.svg"
                   alt="Website Link Icon"
@@ -502,7 +522,10 @@
               <div class="project__card-tech">JavaScript</div>
               <div class="project__card-tech">HTML</div>
               <div class="project__card-tech">SASS</div>
-              <a target="_blank" href="https://github.com/kahalagan00/CV24"
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/kahalagan00/CV24"
                 ><img
                   src="./assets/svg/projects/github.svg"
                   alt="Github Icon"
@@ -510,6 +533,7 @@
               /></a>
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://joshmar-portfolio-cv24-v2.netlify.app"
                 ><img
                   src="./assets/svg/projects/pagelink.svg"
@@ -551,13 +575,17 @@
               <div class="project__card-tech">MVC</div>
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://github.com/kahalagan00/weather-app"
                 ><img
                   src="./assets/svg/projects/github.svg"
                   alt="Github Icon"
                   class="project__card-icon"
               /></a>
-              <a target="_blank" href="https://joshmar-weather-app.netlify.app/"
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://joshmar-weather-app.netlify.app/"
                 ><img
                   src="./assets/svg/projects/pagelink.svg"
                   alt="Website Link Icon"
@@ -586,13 +614,19 @@
               <div class="project__card-tech">HTML</div>
               <div class="project__card-tech">JavaScript</div>
               <div class="project__card-tech">CSS</div>
-              <a target="_blank" href="https://github.com/kahalagan00/MyAge"
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/kahalagan00/MyAge"
                 ><img
                   src="./assets/svg/projects/github.svg"
                   alt="Github Icon"
                   class="project__card-icon"
               /></a>
-              <a target="_blank" href="https://kahalagan00.github.io/MyAge/"
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://kahalagan00.github.io/MyAge/"
                 ><img
                   src="./assets/svg/projects/pagelink.svg"
                   alt="Website Link Icon"
@@ -629,6 +663,7 @@
               <div class="project__card-tech">Anaconda</div>
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://github.com/kahalagan00/Bluelock-Drowning-Detector"
                 ><img
                   src="./assets/svg/projects/github.svg"
@@ -637,6 +672,7 @@
               /></a>
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://github.com/kahalagan00/Bluelock-Drowning-Detector/blob/main/Detection%20Final%20Showcase.mp4"
                 ><img
                   src="./assets/svg/projects/pagelink.svg"
@@ -662,6 +698,7 @@
               <div class="project__card-tech">SASS</div>
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://github.com/kahalagan00/EgoLift-University"
                 ><img
                   src="./assets/svg/projects/github.svg"
@@ -670,6 +707,7 @@
               /></a>
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://kahalagan00.github.io/EgoLift-University/"
                 ><img
                   src="./assets/svg/projects/pagelink.svg"
@@ -963,14 +1001,21 @@
             &nbsp;
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="./assets/documents/Joshmar_Morales_Resume_V1.pdf"
               >Résumé</a
             >
             |
-            <a target="_blank" href="https://github.com/kahalagan00">GitHub</a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/kahalagan00"
+              >GitHub</a
+            >
             |
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="https://www.linkedin.com/in/joshmar-morales-4a354121b"
               >LinkedIn</a
             >

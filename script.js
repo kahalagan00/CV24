@@ -4,6 +4,20 @@
 // UTILITY CLASSES
 const HIDE = "u-hidden";
 
+// Resize fires continuously while a window is dragged; coalesce the work into
+// one callback per animation frame instead of one per event
+function perFrame(fn) {
+  let queued = false;
+  return function () {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      fn();
+    });
+  };
+}
+
 /////////////////////////////////////////////////////////////////////////
 // HEADER SECTION
 const LONG_DEV_INTRO = "Hello! I am Joshmar 👋🏻";
@@ -23,7 +37,7 @@ function updateSize() {
   }
 }
 
-window.addEventListener("resize", updateSize);
+window.addEventListener("resize", perFrame(updateSize));
 updateSize(); // Set the correct intro on load, not just on resize
 
 /////////////////////////////////////////////////////////////////////////
@@ -373,9 +387,12 @@ navMenu?.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", closeMenu);
 });
 
-window.addEventListener("resize", function () {
-  if (window.innerWidth > NAV_BREAKPOINT) closeMenu();
-});
+window.addEventListener(
+  "resize",
+  perFrame(() => {
+    if (window.innerWidth > NAV_BREAKPOINT) closeMenu();
+  })
+);
 
 /////////////////////////////////////////////////////////////////////////
 // LOTTIE ANIMATIONS

@@ -177,7 +177,7 @@
     grid-template-rows: repeat(6, min-content);
     row-gap: 1rem;
 
-    object {
+    img {
       height: 80%;
       width: 80%;
       max-width: 200px;
@@ -204,7 +204,7 @@
     overflow: hidden;
     width: 100%;
 
-    object {
+    img {
       height: 100%;
       width: 100%;
       object-fit: contain;

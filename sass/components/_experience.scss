@@ -82,6 +82,13 @@
 
   &__title {
     // background-color: wheat;
+    // Reset the <button> defaults so the tab renders as it did as a <div>
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    font-family: "Crimson Text", serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -92,6 +99,11 @@
 
     &:hover {
       transform: scale(1.1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-dark-2;
+      outline-offset: 4px;
     }
 
     &--1 {
@@ -114,7 +126,7 @@
       grid-column: 2 / 3;
     }
 
-    p {
+    span {
       font-size: 2rem;
     }
 

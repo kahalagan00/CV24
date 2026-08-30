@@ -56,22 +56,59 @@ function hideAllDescription() {
   });
 }
 
+function activateTab(title) {
+  const selection = title.firstElementChild.textContent.trim().toLowerCase();
+  const currentDescription = document.querySelector(
+    `.experience__description-${EXP_MAP.get(selection)}`
+  );
+  // Resolve the panel before hiding anything, so an unknown label can never
+  // leave the section with every panel hidden
+  if (!currentDescription) return;
+
+  removeAllTitleSelection();
+  title.classList.add("experience__title--active");
+
+  // Roving tabindex: only the selected tab stays in the page tab order
+  expTitles.forEach((tab) => {
+    const isActive = tab === title;
+    tab.setAttribute("aria-selected", isActive);
+    tab.tabIndex = isActive ? 0 : -1;
+  });
+
+  hideAllDescription();
+  currentDescription.classList.remove("u-hidden");
+}
+
 expTitles.forEach(function (title) {
   title.addEventListener("click", function (e) {
     e.preventDefault();
-    removeAllTitleSelection();
-    title.classList.add("experience__title--active");
-
-    const selection = title.firstElementChild.textContent.toLowerCase();
-    const currentDescription = document.querySelector(
-      `.experience__description-${EXP_MAP.get(selection)}`
-    );
-    // console.log(selection);
-    // console.log(currentDescription);
-    hideAllDescription();
-    currentDescription.classList.remove("u-hidden");
+    activateTab(title);
   });
 });
+
+// Arrow keys move between tabs, as a role="tablist" leads users to expect
+const ARROW_STEP = new Map([
+  ["ArrowRight", 1],
+  ["ArrowDown", 1],
+  ["ArrowLeft", -1],
+  ["ArrowUp", -1],
+]);
+
+document
+  .querySelector(".experience__titlebox")
+  .addEventListener("keydown", function (e) {
+    const step = ARROW_STEP.get(e.key);
+    if (!step) return;
+
+    const tabs = [...expTitles];
+    const current = tabs.indexOf(document.activeElement);
+    if (current === -1) return;
+
+    e.preventDefault();
+    const next = tabs[(current + step + tabs.length) % tabs.length];
+    next.focus();
+    activateTab(next);
+  });
 
 /////////////////////////////////////////////////////////////////////////
 // PROJECTS SECTION
@@ -314,9 +351,28 @@ expTitles.forEach(function (title) {
 // NAVBAR SECTION
 const hamburger = document.querySelector(".hamburger");
 const navMenu = document.querySelector(".navMenu");
+const NAV_BREAKPOINT = 760; // Matches the media query in _navbar.scss
+
+function closeMenu() {
+  hamburger.classList.remove("active");
+  navMenu.classList.remove("active");
+  hamburger.setAttribute("aria-expanded", "false");
+}
+
 hamburger.addEventListener("click", () => {
-  hamburger.classList.toggle("active");
-  navMenu.classList.toggle("active");
+  const isOpen = navMenu.classList.toggle("active");
+  hamburger.classList.toggle("active", isOpen);
+  hamburger.setAttribute("aria-expanded", isOpen);
+});
+
+// Close the menu once a destination is picked, and when the viewport grows
+// past the breakpoint where the menu stops applying
+navMenu.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", closeMenu);
+});
+
+window.addEventListener("resize", function () {
+  if (window.innerWidth > NAV_BREAKPOINT) closeMenu();
 });
 
 /////////////////////////////////////////////////////////////////////////
@@ -324,3 +380,17 @@ hamburger.addEventListener("click", () => {
 const footerDate = document.querySelector(".footer-date");
 const date = new Date();
 footerDate.textContent = `© ${date.getFullYear()}`;
+
+/////////////////////////////////////////////////////////////////////////
+// REDUCED MOTION
+// CSS covers the keyframes and transitions, but the Lottie players animate
+// internally, so they have to be stopped through their own element API
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const players = document.querySelectorAll("dotlottie-player");
+  // Stops any player that has not been upgraded by the CDN script yet
+  players.forEach((player) => player.removeAttribute("autoplay"));
+
+  customElements.whenDefined("dotlottie-player").then(() => {
+    players.forEach((player) => player.pause?.());
+  });
+}

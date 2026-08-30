@@ -85,6 +85,15 @@
 .hamburger {
   display: none;
   cursor: pointer;
+  // Reset the <button> defaults so the icon renders as it did as a <div>
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:focus-visible {
+    outline: 2px solid $color-dark-2;
+    outline-offset: 4px;
+  }
 }
 
 .bar {

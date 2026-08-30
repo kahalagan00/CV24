@@ -56,13 +56,19 @@
           <!-- <a href="#interests">Interests</a> -->
         </div>
 
-        <div class="hamburger">
+        <button
+          type="button"
+          class="hamburger"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="navMenu"
+        >
           <span class="bar"></span>
           <span class="bar"></span>
           <span class="bar"></span>
-        </div>
+        </button>
       </nav>
-      <div class="navMenu">
+      <div class="navMenu" id="navMenu">
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
         <!-- <a href="#resources">Resources</a> -->
@@ -113,44 +119,83 @@
         <div class="experience__category">
           <div class="experience__category-separator"></div>
           <h2 class="heading-2">Experience</h2>
-          <div class="experience__titlebox">
-            <div
+          <div
+            class="experience__titlebox"
+            role="tablist"
+            aria-label="Experience categories"
+          >
+            <button
+              type="button"
+              role="tab"
+              id="tab-work"
+              aria-controls="panel-work"
+              aria-selected="true"
               class="experience__title experience__title--1 experience__title--active"
             >
-              <p>Work</p>
+              <span>Work</span>
               <img
                 src="./assets/svg/experience_list/businessman.svg"
-                alt="Business man image"
+                alt=""
                 class="experience__icon"
               />
-            </div>
-            <div class="experience__title experience__title--2">
-              <p>Technical</p>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              id="tab-tech"
+              aria-controls="panel-tech"
+              aria-selected="false"
+              tabindex="-1"
+              class="experience__title experience__title--2"
+            >
+              <span>Technical</span>
               <img
                 src="./assets/svg/experience_list/technical.svg"
-                alt="Developer man image"
+                alt=""
                 class="experience__icon"
               />
-            </div>
-            <div class="experience__title experience__title--3">
-              <p>Education</p>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              id="tab-edu"
+              aria-controls="panel-edu"
+              aria-selected="false"
+              tabindex="-1"
+              class="experience__title experience__title--3"
+            >
+              <span>Education</span>
               <img
                 src="./assets/svg/experience_list/education.svg"
-                alt="Graduating man image"
+                alt=""
                 class="experience__icon"
               />
-            </div>
-            <div class="experience__title experience__title--4">
-              <p>Languages</p>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              id="tab-lang"
+              aria-controls="panel-lang"
+              aria-selected="false"
+              tabindex="-1"
+              class="experience__title experience__title--4"
+            >
+              <span>Languages</span>
               <img
                 src="./assets/svg/experience_list/languages.svg"
-                alt="Speaking man image"
+                alt=""
                 class="experience__icon"
               />
-            </div>
+            </button>
           </div>
         </div>
-        <div class="experience__description experience__description-work">
+        <div
+          class="experience__description experience__description-work"
+          id="panel-work"
+          role="tabpanel"
+          aria-labelledby="tab-work"
+          tabindex="0"
+        >
           <h3 class="heading-3">JCM Global: <em>Software Engineer</em></h3>
           <p class="paragraph-1">
             Developed real-time multi-threaded applications and BSP drivers for
@@ -211,6 +256,10 @@
         </div>
         <div
           class="experience__description experience__description-tech u-hidden"
+          id="panel-tech"
+          role="tabpanel"
+          aria-labelledby="tab-tech"
+          tabindex="0"
         >
           <h3 class="heading-3">Programming Languages</h3>
           <p class="paragraph-1">
@@ -242,10 +291,11 @@
             </div>
             <div class="experience__artbox">
               <object
+                aria-hidden="true"
                 type="image/svg+xml"
                 data="./assets/svg/technologies/tailwind.svg"
               >
-                <img src="./assets/svg/technologies/tailwind.svg" />
+                <img src="./assets/svg/technologies/tailwind.svg" alt="" />
               </object>
             </div>
           </div>
@@ -256,32 +306,39 @@
           <div class="experience__art">
             <div class="experience__artbox">
               <object
+                aria-hidden="true"
                 type="image/svg+xml"
                 data="./assets/svg/technologies/node.svg"
               >
-                <img src="./assets/svg/technologies/node.svg" />
+                <img src="./assets/svg/technologies/node.svg" alt="" />
               </object>
             </div>
             <div class="experience__artbox">
               <object
+                aria-hidden="true"
                 type="image/svg+xml"
                 data="./assets/svg/technologies/mongodb.svg"
               >
-                <img src="./assets/svg/technologies/mongodb.svg" />
+                <img src="./assets/svg/technologies/mongodb.svg" alt="" />
               </object>
             </div>
             <div class="experience__artbox">
               <object
+                aria-hidden="true"
                 type="image/svg+xml"
                 data="./assets/svg/technologies/postgresql.svg"
               >
-                <img src="./assets/svg/technologies/postgresql.svg" />
+                <img src="./assets/svg/technologies/postgresql.svg" alt="" />
               </object>
             </div>
           </div>
         </div>
         <div
           class="experience__description experience__description-edu u-hidden"
+          id="panel-edu"
+          role="tabpanel"
+          aria-labelledby="tab-edu"
+          tabindex="0"
         >
           <h3 class="heading-3">BS in Computer Engineering</h3>
           <p class="paragraph-1">University of Nevada, Las Vegas</p>
@@ -293,26 +350,29 @@
           <div class="experience__art">
             <div class="experience__artbox">
               <object
+                aria-hidden="true"
                 type="image/svg+xml"
                 data="./assets/svg/education/binary.svg"
               >
-                <img src="./assets/svg/education/binary.svg" />
+                <img src="./assets/svg/education/binary.svg" alt="" />
               </object>
             </div>
             <div class="experience__artbox">
               <object
+                aria-hidden="true"
                 type="image/svg+xml"
                 data="./assets/svg/education/electrical.svg"
               >
-                <img src="./assets/svg/education/electrical.svg" />
+                <img src="./assets/svg/education/electrical.svg" alt="" />
               </object>
             </div>
             <div class="experience__artbox">
               <object
+                aria-hidden="true"
                 type="image/svg+xml"
                 data="./assets/svg/education/robotics.svg"
               >
-                <img src="./assets/svg/education/robotics.svg" />
+                <img src="./assets/svg/education/robotics.svg" alt="" />
               </object>
             </div>
           </div>
@@ -320,24 +380,30 @@
 
         <div
           class="experience__description experience__description-lang u-hidden"
+          id="panel-lang"
+          role="tabpanel"
+          aria-labelledby="tab-lang"
+          tabindex="0"
         >
           <h3 class="heading-3">Fluent</h3>
           <p class="paragraph-1">English, Tagalog</p>
           <div class="experience__art">
             <div class="experience__artbox">
               <object
+                aria-hidden="true"
                 type="image/svg+xml"
                 data="./assets/svg/languages/usa_flag.svg"
               >
-                <img src="./assets/svg/languages/usa_flag.svg" />
+                <img src="./assets/svg/languages/usa_flag.svg" alt="" />
               </object>
             </div>
             <div class="experience__artbox">
               <object
+                aria-hidden="true"
                 type="image/svg+xml"
                 data="./assets/svg/languages/ph_flag.svg"
               >
-                <img src="./assets/svg/languages/ph_flag.svg" />
+                <img src="./assets/svg/languages/ph_flag.svg" alt="" />
               </object>
             </div>
           </div>
@@ -346,10 +412,11 @@
           <div class="experience__art">
             <div class="experience__artbox">
               <object
+                aria-hidden="true"
                 type="image/svg+xml"
                 data="./assets/svg/languages/spain_flag.svg"
               >
-                <img src="./assets/svg/languages/spain_flag.svg" />
+                <img src="./assets/svg/languages/spain_flag.svg" alt="" />
               </object>
             </div>
           </div>
